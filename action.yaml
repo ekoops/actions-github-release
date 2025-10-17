@@ -16,6 +16,10 @@ inputs:
   type:
     description: 'Wanted release type (latest, stable, draft, nodraft)'
     required: true
+  filter:
+    description: 'A regex, filtering out releases that do not match'
+    required: false
+    type: string
 
 outputs:
   release:

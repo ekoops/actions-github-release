@@ -2,11 +2,17 @@
 
 from github import Github
 import os
+import re
 
 # Try to get options from enviroment and from inputs as fallback
 wanted_release = os.getenv('type', os.getenv('INPUT_TYPE'))
 repository = os.getenv('repository', os.getenv('INPUT_REPOSITORY'))
 token = os.getenv('token', os.getenv('INPUT_TOKEN', None))
+
+filter = os.getenv('INPUT_FILTER', None)
+filter_regex = None
+if filter is not None:
+    filter_regex = re.compile(filter)
 
 # Init class
 G = Github(token) if token else Github()
@@ -25,6 +31,9 @@ def output(release):
 
 # Releases parsing
 for release in releases:
+    if filter_regex is not None and re.search(filter_regex, release.tag_name) is None:
+        continue
+
     if wanted_release == 'stable':
         if release.prerelease == 0 and release.draft == 0:
             output(release)

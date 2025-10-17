@@ -10,6 +10,7 @@ Name | Description | Example
 repository | The Github owner/repository | `nodejs/node`
 type | The release type (prerelease | stable | latest | nodraft) | `stable`
 token | Github auth token (default variable for each action session) | `${{ secrets.GITHUB_TOKEN }}`
+filter | A regex, filtering out releases that do not match | `^.*(?<!\+alpha)$`
 
 #### Possible values for `type` input
 * *stable* - Get the stable `latest` release
